@@ -212,6 +212,20 @@
                     <required></required>
                 </field>
             </row>
+
+              <row>
+                <field>
+                    <dc-schema>dc</dc-schema>
+                    <dc-element>description</dc-element>
+                    <dc-qualifier>resumo</dc-qualifier>
+                    <repeatable>false</repeatable>
+                    <label>Resumo</label>
+                    <input-type>textarea</input-type>
+                    <hint>Insira o resumo do item.</hint>
+                    <required></required>
+                </field>
+            </row> 
+            
             <row>
                 <field>
                     <dc-schema>dc</dc-schema>
