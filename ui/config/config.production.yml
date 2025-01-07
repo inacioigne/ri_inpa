@@ -1,0 +1,24 @@
+# Theme Config
+themes:
+  - name: inpa
+    headTags:
+    - tagName: link
+      attributes:
+        rel: icon
+        href: assets/dspace/images/favicons/favicon.ico
+        sizes: any
+    - tagName: link
+      attributes:
+        rel: icon
+        href: assets/dspace/images/favicons/favicon.svg
+        type: image/svg+xml
+    - tagName: link
+      attributes:
+        rel: apple-touch-icon
+        href: assets/dspace/images/favicons/apple-touch-icon.png
+    - tagName: link
+      attributes:
+        rel: manifest
+        href: assets/dspace/images/favicons/manifest.webmanifest
+
+defaultLanguage: pt-BR
