@@ -3,7 +3,7 @@ networks:
 
 services:
   # Dspace UI
-   ui:
+  ui:
      container_name: dspace-ui
      image: dspace/dspace-angular:${DSPACE_VERSION}-dist
      build: 
@@ -19,7 +19,6 @@ services:
        target: 4000
      stdin_open: true
      tty: true
-
   # Dspace API
   api:
     container_name: dspace-api      
