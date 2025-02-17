@@ -30,7 +30,6 @@
               "lodash",
               "jwt-decode",
               "uuid",
-              "webfontloader",
               "zone.js"
             ],
             "outputPath": "dist/browser",
@@ -58,12 +57,7 @@
               {
                 "input": "src/themes/dspace/styles/theme.scss",
                 "inject": false,
-                "bundleName": "dspace-theme"
-              },
-              {
-                "input": "src/themes/inpa/styles/theme.scss",
-                "inject": false,
-                "bundleName": "inpa-theme"
+                "bundleName": "dspace-theme" 
               }
             ],
             "scripts": [],

@@ -1,46 +1,57 @@
 networks:
-  dockernet:
-
+  dspacenet:
 services:
-  # Dspace UI
-  ui:
-     container_name: dspace-ui
-     image: dspace/dspace-angular:${DSPACE_VERSION}-dist
-     build: 
-       context: .
-       dockerfile: ./dockerfiles/ui/ui.dockerfile
-       # dockerfile: ui-dev.dockerfile
-     env_file:
-       - .env
-     networks:
-       - dockernet
-     ports:
-     - published: 4000
-       target: 4000
-     stdin_open: true
-     tty: true
-  # Dspace API
+  # ui:
+  #   container_name: dspace-angular
+  #   environment:
+  #     DSPACE_UI_SSL: 'false'
+  #     DSPACE_UI_HOST: dspace-angular
+  #     DSPACE_UI_PORT: '4000'
+  #     DSPACE_UI_NAMESPACE: /
+  #     DSPACE_REST_SSL: 'true'
+  #     DSPACE_REST_HOST: sandbox.dspace.org
+  #     DSPACE_REST_PORT: 443
+  #     DSPACE_REST_NAMESPACE: /server
+  #   image: "${DOCKER_REGISTRY:-docker.io}/${DOCKER_OWNER:-dspace}/dspace-angular:${DSPACE_VER:-dspace-8_x}-dist"
+  #   build:
+  #     context: ..
+  #     dockerfile: Dockerfile.dist
+  #   networks:
+  #     dspacenet:
+  #   ports:
+  #   - published: 4000
+  #     target: 4000
+  #   stdin_open: true
+  #   tty: true
+  
   api:
-    container_name: dspace-api      
-    image: dspace/dspace:${DSPACE_VERSION}
-    build: 
+    container_name: dspace
+    environment:
+      dspace__P__dir: /dspace
+      dspace__P__server__P__url: https://ri-api.inpa.gov.br/server
+      # dspace__P__ui__P__url: http://localhost:4000
+      dspace__P__name: 'RI INPA'
+      db__P__url: 'jdbc:postgresql://dspacedb:5432/dspace'
+      solr__P__server: http://dspacesolr:8983/solr
+      proxies__P__trusted__P__ipranges: '172.23.0'
+      LOGGING_CONFIG: /dspace/config/log4j2-container.xml
+    image: "docker.io/dspace/dspace:dspace-8.1"
+    build:
       context: .
       dockerfile: api.dockerfile
-    env_file:
-      - .env
     depends_on:
-      - dspacedb
-      - dspacesolr
+    - dspacedb
     networks:
-      - dockernet
+      - dspacenet
     ports:
-      - published: 8080
-        target: 8080
-      - published: 8000
-        target: 8000
+    - published: 8080
+      target: 8080
+    - published: 8000
+      target: 8000
     stdin_open: true
     tty: true
     volumes:
+    # Keep DSpace assetstore directory between reboots
     - assetstore:/dspace/assetstore
     - ./api/dspace/config:/dspace/config
     entrypoint:
@@ -51,42 +62,54 @@ services:
       /dspace/bin/dspace database migrate
       java -jar /dspace/webapps/server-boot.jar --dspace.dir=/dspace
 
-  # Banco de Dados
+  # DSpace PostgreSQL database container
   dspacedb:
     container_name: dspacedb
-    image: dspace/dspace-postgres-pgcrypto:${DSPACE_VERSION}
-    build: 
-     context: ./dockerfiles/db/
-    env_file:
-      - .env
+    # Uses a custom Postgres image with pgcrypto installed
+    image: "docker.io/dspace/dspace-postgres-pgcrypto:dspace-8.1"
+    build:
+      # Must build out of subdirectory to have access to install script for pgcrypto
+      context: ./api/dspace/src/main/docker/dspace-postgres-pgcrypto/
+    environment:
+      PGDATA: /pgdata
+      POSTGRES_PASSWORD: dspace
     networks:
-      dockernet:
+      dspacenet:
     ports:
-      - published: 5432
-        target: 5432
+    - published: 5432
+      target: 5432
     stdin_open: true
     tty: true
     volumes:
-      - pgdata:/pgdata
+    # Keep Postgres data directory between reboots
+    - pgdata:/pgdata
 
-  # DSpace Solr
+  # DSpace Solr container
   dspacesolr:
     container_name: dspacesolr
-    image: dspace/dspace-solr:${DSPACE_VERSION}
+    image: "docker.io/dspace/dspace-solr:dspace-8.1"
     build:
-      context: ./dockerfiles/solr/
-      additional_contexts: 
+      context: ./api/dspace/src/main/docker/dspace-solr/
+      # Provide path to Solr configs necessary to build Docker image
+      additional_contexts:
         solrconfigs: ./api/dspace/solr
+      args:
+        SOLR_VERSION: "${SOLR_VER:-8.11}"
     networks:
-      dockernet:
+      dspacenet:
     ports:
-      - published: 8983
-        target: 8983
+    - published: 8983
+      target: 8983
     stdin_open: true
     tty: true
     working_dir: /var/solr/data
     volumes:
-      - solr_data:/var/solr/data
+    # Keep Solr data directory between reboots
+    - solr_data:/var/solr/data
+    # Initialize all DSpace Solr cores then start Solr:
+    # * First, run precreate-core to create the core (if it doesn't yet exist). If exists already, this is a no-op
+    # * Second, copy configsets to this core:
+    #   Updates to Solr configs require the container to be rebuilt/restarted: `docker compose -p d7 up -d --build dspacesolr`
     entrypoint:
     - /bin/bash
     - '-c'
@@ -108,4 +131,4 @@ services:
 volumes:
   assetstore:
   pgdata:
-  solr_data: 
+  solr_data:
