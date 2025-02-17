@@ -21,7 +21,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
-import { environment } from '../../../../src/environments/environment';
+import { environment } from '../../../environments/environment';
 import { ConfigurationDataService } from '../../core/data/configuration-data.service';
 import { RemoteData } from '../../core/data/remote-data';
 import { GroupDataService } from '../../core/eperson/group-data.service';

@@ -20,8 +20,8 @@ import { CommunitySearchResult } from '../../../object-collection/shared/communi
 import { ActivatedRouteStub } from '../../../testing/active-router.stub';
 import { TruncatableService } from '../../../truncatable/truncatable.service';
 import { TruncatePipe } from '../../../utils/truncate.pipe';
-import { getMockThemeService } from './../../../../shared/mocks/theme-service.mock';
-import { ThemeService } from './../../../../shared/theme-support/theme.service';
+import { getMockThemeService } from '../../../mocks/theme-service.mock';
+import { ThemeService } from '../../../theme-support/theme.service';
 import { CommunitySearchResultListElementComponent } from './community-search-result-list-element.component';
 
 let communitySearchResultListElementComponent: CommunitySearchResultListElementComponent;

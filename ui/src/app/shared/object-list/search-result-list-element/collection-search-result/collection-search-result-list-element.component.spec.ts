@@ -20,8 +20,8 @@ import { CollectionSearchResult } from '../../../object-collection/shared/collec
 import { ActivatedRouteStub } from '../../../testing/active-router.stub';
 import { TruncatableService } from '../../../truncatable/truncatable.service';
 import { TruncatePipe } from '../../../utils/truncate.pipe';
-import { getMockThemeService } from './../../../../shared/mocks/theme-service.mock';
-import { ThemeService } from './../../../../shared/theme-support/theme.service';
+import { getMockThemeService } from '../../../mocks/theme-service.mock';
+import { ThemeService } from '../../../theme-support/theme.service';
 import { CollectionSearchResultListElementComponent } from './collection-search-result-list-element.component';
 
 let collectionSearchResultListElementComponent: CollectionSearchResultListElementComponent;

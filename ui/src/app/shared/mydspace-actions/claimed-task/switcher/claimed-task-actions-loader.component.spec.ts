@@ -22,7 +22,7 @@ import { WorkflowItem } from '../../../../core/submission/models/workflowitem.mo
 import { ClaimedTaskDataService } from '../../../../core/tasks/claimed-task-data.service';
 import { ClaimedTask } from '../../../../core/tasks/models/claimed-task-object.model';
 import { PoolTaskDataService } from '../../../../core/tasks/pool-task-data.service';
-import { ActivatedRouteStub } from '../../../../shared/testing/active-router.stub';
+import { ActivatedRouteStub } from '../../../testing/active-router.stub';
 import { DynamicComponentLoaderDirective } from '../../../abstract-component-loader/dynamic-component-loader.directive';
 import { getMockRequestService } from '../../../mocks/request.service.mock';
 import { getMockSearchService } from '../../../mocks/search-service.mock';

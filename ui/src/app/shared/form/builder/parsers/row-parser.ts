@@ -16,8 +16,8 @@ import {
 import { DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP } from '../ds-dynamic-form-ui/ds-dynamic-form-constants';
 import { DynamicRowGroupModel } from '../ds-dynamic-form-ui/models/ds-dynamic-row-group-model';
 import { FormFieldModel } from '../models/form-field.model';
-import { SubmissionFieldScopeType } from './../../../../core/submission/submission-field-scope-type';
-import { SectionVisibility } from './../../../../submission/objects/section-visibility.model';
+import { SubmissionFieldScopeType } from '../../../../core/submission/submission-field-scope-type';
+import { SectionVisibility } from '../../../../submission/objects/section-visibility.model';
 import {
   CONFIG_DATA,
   FieldParser,
