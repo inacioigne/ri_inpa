@@ -1,28 +1,28 @@
 networks:
   dspacenet:
 services:
-  # ui:
-  #   container_name: dspace-angular
-  #   environment:
-  #     DSPACE_UI_SSL: 'false'
-  #     DSPACE_UI_HOST: dspace-angular
-  #     DSPACE_UI_PORT: '4000'
-  #     DSPACE_UI_NAMESPACE: /
-  #     DSPACE_REST_SSL: 'true'
-  #     DSPACE_REST_HOST: sandbox.dspace.org
-  #     DSPACE_REST_PORT: 443
-  #     DSPACE_REST_NAMESPACE: /server
-  #   image: "${DOCKER_REGISTRY:-docker.io}/${DOCKER_OWNER:-dspace}/dspace-angular:${DSPACE_VER:-dspace-8_x}-dist"
-  #   build:
-  #     context: ..
-  #     dockerfile: Dockerfile.dist
-  #   networks:
-  #     dspacenet:
-  #   ports:
-  #   - published: 4000
-  #     target: 4000
-  #   stdin_open: true
-  #   tty: true
+  ui:
+    container_name: dspace-angular
+    environment:
+      DSPACE_UI_SSL: 'false'
+      DSPACE_UI_HOST: dspace-angular
+      DSPACE_UI_PORT: '4000'
+      DSPACE_UI_NAMESPACE: /
+      DSPACE_REST_SSL: 'true'
+      DSPACE_REST_HOST: ri.inpa.gov.br
+      DSPACE_REST_PORT: 443
+      DSPACE_REST_NAMESPACE: /server
+    image: "docker.io/dspace/dspace-angular:dspace-8.1-dist"
+    build:
+      context: ./ui
+      dockerfile: Dockerfile.dist
+    networks:
+      dspacenet:
+    ports:
+    - published: 4000
+      target: 4000
+    stdin_open: true
+    tty: true
   
   api:
     container_name: dspace
