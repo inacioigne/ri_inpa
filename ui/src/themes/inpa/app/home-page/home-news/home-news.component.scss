@@ -1,6 +1,31 @@
 :host {
   display: block;
 
+  div.background-image-container {
+    color: white;
+    position: relative;
+
+    // div.inpa-logo {
+    //   border: solid 5px;
+    //   background-color: brown;
+    // }
+
+    @media (max-width: 767.98px) {
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    // @media (max-width: 400px) {
+    //   height: 100px;
+    // }
+
+    
+
+  }
+
   // div.background-image-container {
   //   color: white;
   //   position: relative;
@@ -57,17 +82,15 @@
   //   }
   // }
 
-  .jumbotron {
-    background-color: transparent;
-  }
+  // .jumbotron {
+  //   background-color: transparent;
+  // }
 
-  a {
-    color: var(--ds-home-news-link-color);
+  // a {
+  //   color: var(--ds-home-news-link-color);
 
-    @include hover {
-      color: var(--ds-home-news-link-hover-color);
-    }
-  }
+  //   @include hover {
+  //     color: var(--ds-home-news-link-hover-color);
+  //   }
+  // }
 }
-
-
